@@ -1,0 +1,76 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+  --font-sans: "DM Sans", system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+}
+
+@layer base {
+  body {
+    font-family: var(--font-sans);
+    background-color: #f5f9ff;
+    color: #0f172a;
+  }
+
+  h1, h2, h3, h4, .font-display {
+    font-family: var(--font-display);
+  }
+}
+
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+/* 3D Flashcard Flip Utilities */
+.flashcard-perspective {
+  perspective: 1200px;
+}
+
+.flashcard-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.flashcard-inner.is-flipped {
+  transform: rotateY(180deg);
+}
+
+.flashcard-face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.flashcard-face-back {
+  transform: rotateY(180deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flashcard-inner {
+    transition: opacity 0.15s ease;
+  }
+  .flashcard-inner.is-flipped {
+    transform: none;
+  }
+  .flashcard-face-front {
+    opacity: 1;
+  }
+  .flashcard-inner.is-flipped .flashcard-face-front {
+    opacity: 0;
+    pointer-events: none;
+  }
+  .flashcard-face-back {
+    transform: none;
+    opacity: 0;
+    pointer-events: none;
+  }
+  .flashcard-inner.is-flipped .flashcard-face-back {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
